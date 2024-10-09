@@ -29,6 +29,7 @@ const Modal = ({ isOpen, onClose, onSubmit }) => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
+              className={styles.input}
             />
           </div>
           <div>
@@ -38,10 +39,13 @@ const Modal = ({ isOpen, onClose, onSubmit }) => {
               value={link}
               onChange={(e) => setLink(e.target.value)}
               required
+              className={styles.input}
             />
           </div>
-          <button type="submit">Add Link</button>
-          <button type="button" onClick={onClose}>Cancel</button>
+          <div className={styles.buttonContainer}>
+            <button type="submit" className={styles.addButton}>Add Link</button>
+            <button type="button" onClick={onClose} className={styles.cancelButton}>Cancel</button>
+          </div>
         </form>
       </div>
     </div>

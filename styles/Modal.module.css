@@ -22,12 +22,34 @@
     margin-bottom: 1rem;
 }
 
-.modal input {
+.input {
     width: 100%;
     padding: 0.5rem;
     margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
-.modal button {
+.buttonContainer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.addButton {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
     margin-right: 0.5rem;
+}
+
+.cancelButton {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
 }

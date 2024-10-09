@@ -3,12 +3,7 @@ import styles from '../styles/Links.module.css';
 import Modal from '../components/Modal';
 
 const LinksPage = () => {
-  const [linksData, setLinksData] = useState([
-    { id: 1, name: 'Google', link: 'https://www.google.com' },
-    { id: 2, name: 'GitHub', link: 'https://www.github.com' },
-    { id: 3, name: 'Next.js', link: 'https://nextjs.org' },
-  ]);
-
+  const [linksData, setLinksData] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleAddLink = (newLink) => {
