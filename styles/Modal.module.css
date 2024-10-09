@@ -8,53 +8,54 @@
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-  
-  .modal {
+}
+
+.modal {
     background: white;
     padding: 2rem;
     border-radius: 8px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     width: 400px;
-  }
-  
-  .modal h2 {
+}
+
+.modal h2 {
     margin-bottom: 1rem;
     color: #333;
-  }
-  
-  .modal label {
+}
+
+.modal label {
     color: #333;
-  }
-  
-  .modal .input {
+}
+
+.modal .input {
     width: 100%;
     padding: 0.5rem;
     margin-bottom: 1rem;
     border: 1px solid #ccc;
     border-radius: 4px;
     background-color: #f7f7f7;
+    color: #333;
     transition: border-color 0.3s ease, background-color 0.3s ease;
-  }
-  
-  .modal .input:hover {
+}
+
+.modal .input:hover {
     border-color: #0056b3;
     background-color: #e9ecef;
     transform: scale(1.01);
-  }
-  
-  .modal .input:focus {
+}
+
+.modal .input:focus {
     border-color: #007bff;
     background-color: #fff;
     outline: none;
-  }
-  
-  .buttonContainer {
+}
+
+.buttonContainer {
     display: flex;
     justify-content: flex-end;
-  }
-  
-  .addButton {
+}
+
+.addButton {
     background-color: #007bff;
     color: white;
     border: none;
@@ -62,14 +63,13 @@
     padding: 0.5rem 1rem;
     cursor: pointer;
     margin-right: 0.5rem;
-  }
-  
-  .cancelButton {
+}
+
+.cancelButton {
     background-color: #dc3545;
     color: white;
     border: none;
     border-radius: 4px;
     padding: 0.5rem 1rem;
     cursor: pointer;
-  }
-  
+}
