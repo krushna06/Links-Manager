@@ -5,10 +5,20 @@ import Modal from '../components/Modal';
 const LinksPage = () => {
   const [linksData, setLinksData] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentLink, setCurrentLink] = useState(null);
 
   const handleAddLink = (newLink) => {
     const newId = linksData.length ? linksData[linksData.length - 1].id + 1 : 1;
     setLinksData([...linksData, { id: newId, ...newLink }]);
+  };
+
+  const deleteLink = (id) => {
+    setLinksData(linksData.filter(link => link.id !== id));
+  };
+
+  const openEditModal = (link) => {
+    setCurrentLink(link);
+    setIsModalOpen(true);
   };
 
   return (
@@ -22,6 +32,7 @@ const LinksPage = () => {
               <th>ID</th>
               <th>Name</th>
               <th>Link</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -34,14 +45,26 @@ const LinksPage = () => {
                     {link}
                   </a>
                 </td>
+                <td>
+                  <button onClick={() => openEditModal({ id, name, link })}>
+                    <i className="fa fa-pencil" aria-hidden="true"></i>
+                  </button>
+                  <button onClick={() => deleteLink(id)}>
+                    <i className="fa fa-trash" aria-hidden="true"></i>
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
         <Modal 
           isOpen={isModalOpen} 
-          onClose={() => setIsModalOpen(false)} 
+          onClose={() => {
+            setIsModalOpen(false);
+            setCurrentLink(null);
+          }} 
           onSubmit={handleAddLink} 
+          currentLink={currentLink}
         />
       </div>
     </div>

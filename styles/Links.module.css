@@ -62,3 +62,9 @@
   right: 20px;
   cursor: pointer;
 }
+
+.table td i {
+  cursor: pointer;
+  margin: 0 5px;
+  font-size: 1.2rem;
+}
