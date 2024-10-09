@@ -1,18 +1,24 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from '../styles/Modal.module.css';
 
-const Modal = ({ isOpen, onClose, onSubmit }) => {
+const Modal = ({ isOpen, onClose, onSubmit, currentLink }) => {
   const [name, setName] = useState('');
   const [link, setLink] = useState('');
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (name && link) {
-      onSubmit({ name, link });
+  useEffect(() => {
+    if (currentLink) {
+      setName(currentLink.name);
+      setLink(currentLink.link);
+    } else {
       setName('');
       setLink('');
-      onClose();
     }
+  }, [currentLink]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit({ name, link });
+    onClose();
   };
 
   if (!isOpen) return null;
@@ -20,33 +26,27 @@ const Modal = ({ isOpen, onClose, onSubmit }) => {
   return (
     <div className={styles.overlay}>
       <div className={styles.modal}>
-        <h2>Add Link</h2>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label>Name:</label>
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-              className={styles.input}
-            />
-          </div>
-          <div>
-            <label>Link:</label>
-            <input
-              type="url"
-              value={link}
-              onChange={(e) => setLink(e.target.value)}
-              required
-              className={styles.input}
-            />
-          </div>
-          <div className={styles.buttonContainer}>
-            <button type="submit" className={styles.addButton}>Add Link</button>
-            <button type="button" onClick={onClose} className={styles.cancelButton}>Cancel</button>
-          </div>
-        </form>
+        <h2>{currentLink ? 'Edit Link' : 'Add Link'}</h2>
+        <label>Name:</label>
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          className={`${styles.input} input`}
+        />
+        <label>Link:</label>
+        <input
+          type="text"
+          value={link}
+          onChange={(e) => setLink(e.target.value)}
+          className={`${styles.input} input`}
+        />
+        <div className={styles.buttonContainer}>
+          <button onClick={handleSubmit} className={styles.addButton}>
+            {currentLink ? 'Update Link' : 'Add Link'}
+          </button>
+          <button onClick={onClose} className={styles.cancelButton}>Cancel</button>
+        </div>
       </div>
     </div>
   );
