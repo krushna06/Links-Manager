@@ -5,7 +5,7 @@ const LinksPage = () => {
     <div className={styles.container}>
       <div className={styles.content}>
         <h1 className={styles.title}>Links Page</h1>
-        <p>This page will display your links.</p>
+        <p className={styles.text}>This page will display your links.</p>
       </div>
     </div>
   );
