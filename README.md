@@ -27,3 +27,4 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 - Better/Comfortable UI
 - Postgresql Database Implementation
 - Support More Login/Register Methods
+- Sort Option
