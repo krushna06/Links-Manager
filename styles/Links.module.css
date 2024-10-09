@@ -5,9 +5,9 @@
     height: 100vh;
     background-color: #e9ecef;
     font-family: Arial, sans-serif;
-}
+  }
   
-.content {
+  .content {
     background-color: white;
     padding: 2rem;
     border-radius: 8px;
@@ -15,8 +15,9 @@
     width: 80%;
     max-width: 600px;
     text-align: center;
-}
+  }
   
-h1 {
+  .title {
     color: #333;
-}
+  }
+  
