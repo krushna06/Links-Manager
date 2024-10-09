@@ -1,11 +1,14 @@
+import styles from '../styles/Links.module.css';
+
 const LinksPage = () => {
-    return (
-      <div>
+  return (
+    <div className={styles.container}>
+      <div className={styles.content}>
         <h1>Links Page</h1>
-        <p>This page will contain the links.</p>
+        <p>This page will display your links.</p>
       </div>
-    );
-  };
-  
-  export default LinksPage;
-  
+    </div>
+  );
+};
+
+export default LinksPage;
