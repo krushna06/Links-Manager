@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import styles from '../styles/Login.module.css';
 
 const LoginPage = () => {
   const router = useRouter();
@@ -20,10 +21,10 @@ const LoginPage = () => {
   };
 
   return (
-    <div>
-      <h1>Login</h1>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <form onSubmit={handleSubmit}>
+    <div className={styles.container}>
+      <form className={styles.loginForm} onSubmit={handleSubmit}>
+        <h1>Login</h1>
+        {error && <p className={styles.error}>{error}</p>}
         <div>
           <label>Username:</label>
           <input
