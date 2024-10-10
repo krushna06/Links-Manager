@@ -6,6 +6,7 @@ const LinksPage = () => {
   const [linksData, setLinksData] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentLink, setCurrentLink] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const handleAddLink = (newLink) => {
     const newId = linksData.length ? linksData[linksData.length - 1].id + 1 : 1;
@@ -21,10 +22,21 @@ const LinksPage = () => {
     setIsModalOpen(true);
   };
 
+  const filteredLinks = linksData.filter(link =>
+    link.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className={styles.container}>
       <div className={styles.content}>
         <h1 className={styles.title}>Links Page</h1>
+        <input
+          type="text"
+          placeholder="Search by name..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className={styles.searchInput}
+        />
         <button className={styles.addButton} onClick={() => setIsModalOpen(true)}>+</button>
         <table className={styles.table}>
           <thead>
@@ -36,7 +48,7 @@ const LinksPage = () => {
             </tr>
           </thead>
           <tbody>
-            {linksData.map(({ id, name, link }) => (
+            {filteredLinks.map(({ id, name, link }) => (
               <tr key={id}>
                 <td>{id}</td>
                 <td>{name}</td>
