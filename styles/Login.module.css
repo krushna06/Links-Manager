@@ -10,7 +10,7 @@
 .loginForm {
   background-color: white;
   padding: 2rem;
-  border-radius: 8px;
+  border-radius: 16px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   width: 350px;
 }
@@ -33,7 +33,7 @@
   padding: 0.5rem;
   margin-bottom: 1rem;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 8px;
   background-color: #f8f9fa;
   color: #333;
   transition: border-color 0.3s, background-color 0.3s;
@@ -48,17 +48,17 @@
 .button {
   width: 100%;
   padding: 0.5rem;
-  background-color: #0070f3;
+  background-color: #636363;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 16px;
   transition: background-color 0.3s;
 }
 
 .button:hover {
-  background-color: #005bb5;
+  background-color: #464646;
 }
 
 .error {
