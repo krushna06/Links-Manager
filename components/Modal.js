@@ -4,6 +4,7 @@ import styles from '../styles/Modal.module.css';
 const Modal = ({ isOpen, onClose, onSubmit, currentLink }) => {
   const [name, setName] = useState('');
   const [link, setLink] = useState('');
+  const [isClosing, setIsClosing] = useState(false);
 
   useEffect(() => {
     if (currentLink) {
@@ -18,14 +19,22 @@ const Modal = ({ isOpen, onClose, onSubmit, currentLink }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit({ name, link });
-    onClose();
+    handleClose();
   };
 
-  if (!isOpen) return null;
+  const handleClose = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      onClose();
+      setIsClosing(false);
+    }, 300);
+  };
+
+  if (!isOpen && !isClosing) return null;
 
   return (
-    <div className={styles.overlay}>
-      <div className={styles.modal}>
+    <div className={`${styles.overlay} ${isClosing ? styles.closing : ''}`}>
+      <div className={`${styles.modal} ${isClosing ? styles.closing : ''}`}>
         <h2>{currentLink ? 'Edit Link' : 'Add Link'}</h2>
         <label>Name:</label>
         <input
@@ -45,7 +54,9 @@ const Modal = ({ isOpen, onClose, onSubmit, currentLink }) => {
           <button onClick={handleSubmit} className={styles.addButton}>
             {currentLink ? 'Update Link' : 'Add Link'}
           </button>
-          <button onClick={onClose} className={styles.cancelButton}>Cancel</button>
+          <button onClick={handleClose} className={styles.cancelButton}>
+            Cancel
+          </button>
         </div>
       </div>
     </div>
