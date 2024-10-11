@@ -78,3 +78,20 @@
   text-decoration: underline;
   cursor: pointer;
 }
+
+.googleButton {
+  width: 100%;
+  padding: 0.5rem;
+  background-color: #4285f4;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 0.5rem;
+  transition: background-color 0.3s;
+}
+
+.googleButton:hover {
+  background-color: #357ae8;
+}
