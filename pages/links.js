@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from '../styles/Links.module.css';
 import Modal from '../components/Modal';
 
@@ -8,9 +8,30 @@ const LinksPage = () => {
   const [currentLink, setCurrentLink] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
 
-  const handleAddLink = (newLink) => {
-    const newId = linksData.length ? linksData[linksData.length - 1].id + 1 : 1;
-    setLinksData([...linksData, { id: newId, ...newLink }]);
+  useEffect(() => {
+    const fetchLinks = async () => {
+      const response = await fetch('/api/links');
+      const result = await response.json();
+      if (result.success) {
+        setLinksData(result.data);
+      }
+    };
+
+    fetchLinks();
+  }, []);
+
+  const handleAddLink = async (newLink) => {
+    const response = await fetch('/api/links', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newLink),
+    });
+    const result = await response.json();
+    if (result.success) {
+      setLinksData([...linksData, result.data]);
+    }
   };
 
   const deleteLink = (id) => {
@@ -48,9 +69,9 @@ const LinksPage = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredLinks.map(({ id, name, link }) => (
-              <tr key={id}>
-                <td>{id}</td>
+            {filteredLinks.map(({ _id, name, link }) => (
+              <tr key={_id}>
+                <td>{_id}</td>
                 <td>{name}</td>
                 <td>
                   <a href={link} target="_blank" rel="noopener noreferrer">
@@ -58,10 +79,10 @@ const LinksPage = () => {
                   </a>
                 </td>
                 <td>
-                  <button onClick={() => openEditModal({ id, name, link })}>
+                  <button onClick={() => openEditModal({ _id, name, link })}>
                     <i className="fa fa-pencil" aria-hidden="true"></i>
                   </button>
-                  <button onClick={() => deleteLink(id)}>
+                  <button onClick={() => deleteLink(_id)}>
                     <i className="fa fa-trash" aria-hidden="true"></i>
                   </button>
                 </td>
