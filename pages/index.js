@@ -46,10 +46,10 @@ const LoginPage = () => {
           />
         </div>
         <button type="submit" className={styles.button}>Login</button>
-      </form>
-      <p>
+        <p className={styles.link}>
         Don’t have an account? <a href="/register">Register here</a>
-      </p>
+        </p>
+      </form>
     </div>
   );
 };

@@ -66,3 +66,15 @@
   text-align: center;
   margin-bottom: 1rem;
 }
+
+.link {
+  margin-top: 1rem;
+  text-align: center;
+  color: #011d3b;
+}
+
+.link a {
+  color: #0070f3;
+  text-decoration: underline;
+  cursor: pointer;
+}
