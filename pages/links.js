@@ -1,12 +1,22 @@
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { useAuth } from '../hooks/useAuth';
 import styles from '../styles/Links.module.css';
 import Modal from '../components/Modal';
 
 const LinksPage = () => {
+  const router = useRouter();
+  const { user, loading } = useAuth();
   const [linksData, setLinksData] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentLink, setCurrentLink] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
+
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push('/');
+    }
+  }, [user, loading]);
 
   useEffect(() => {
     const fetchLinks = async () => {
@@ -17,8 +27,10 @@ const LinksPage = () => {
       }
     };
 
-    fetchLinks();
-  }, []);
+    if (user) {
+      fetchLinks();
+    }
+  }, [user]);
 
   const handleAddLink = async (newLink) => {
     if (currentLink) {
@@ -65,6 +77,14 @@ const LinksPage = () => {
   const filteredLinks = linksData.filter(link =>
     link.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!user) {
+    return null;
+  }
 
   return (
     <div className={styles.container}>
