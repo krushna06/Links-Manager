@@ -9,6 +9,7 @@ const LinksPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
+    // Fetch links from the API when the page loads
     const fetchLinks = async () => {
       const response = await fetch('/api/links');
       const result = await response.json();
@@ -21,6 +22,7 @@ const LinksPage = () => {
   }, []);
 
   const handleAddLink = async (newLink) => {
+    // Send new link to the API
     const response = await fetch('/api/links', {
       method: 'POST',
       headers: {
@@ -62,27 +64,27 @@ const LinksPage = () => {
         <table className={styles.table}>
           <thead>
             <tr>
-              <th>ID</th>
+              <th>Sr. No.</th> {/* Change ID to Sr. No. */}
               <th>Name</th>
               <th>Link</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {filteredLinks.map(({ _id, name, link }) => (
-              <tr key={_id}>
-                <td>{_id}</td>
-                <td>{name}</td>
+            {filteredLinks.map((link, index) => (
+              <tr key={link._id}>
+                <td>{index + 1}</td> {/* Use index for Sr. No. */}
+                <td>{link.name}</td>
                 <td>
-                  <a href={link} target="_blank" rel="noopener noreferrer">
-                    {link}
+                  <a href={link.link} target="_blank" rel="noopener noreferrer">
+                    {link.link}
                   </a>
                 </td>
                 <td>
-                  <button onClick={() => openEditModal({ _id, name, link })}>
+                  <button onClick={() => openEditModal({ _id: link._id, name: link.name, link: link.link })}>
                     <i className="fa fa-pencil" aria-hidden="true"></i>
                   </button>
-                  <button onClick={() => deleteLink(_id)}>
+                  <button onClick={() => deleteLink(link._id)}>
                     <i className="fa fa-trash" aria-hidden="true"></i>
                   </button>
                 </td>
