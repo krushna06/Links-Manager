@@ -9,7 +9,6 @@ const LinksPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
-    // Fetch links from the API when the page loads
     const fetchLinks = async () => {
       const response = await fetch('/api/links');
       const result = await response.json();
@@ -22,22 +21,40 @@ const LinksPage = () => {
   }, []);
 
   const handleAddLink = async (newLink) => {
-    // Send new link to the API
-    const response = await fetch('/api/links', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newLink),
-    });
-    const result = await response.json();
-    if (result.success) {
-      setLinksData([...linksData, result.data]);
+    if (currentLink) {
+      const response = await fetch(`/api/links?id=${currentLink._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newLink),
+      });
+      const result = await response.json();
+      if (result.success) {
+        setLinksData(linksData.map(link => link._id === currentLink._id ? result.data : link));
+      }
+    } else {
+      const response = await fetch('/api/links', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newLink),
+      });
+      const result = await response.json();
+      if (result.success) {
+        setLinksData([...linksData, result.data]);
+      }
     }
   };
 
-  const deleteLink = (id) => {
-    setLinksData(linksData.filter(link => link.id !== id));
+  const deleteLink = async (id) => {
+    const response = await fetch(`/api/links?id=${id}`, {
+      method: 'DELETE',
+    });
+    if (response.ok) {
+      setLinksData(linksData.filter(link => link._id !== id));
+    }
   };
 
   const openEditModal = (link) => {
@@ -64,7 +81,7 @@ const LinksPage = () => {
         <table className={styles.table}>
           <thead>
             <tr>
-              <th>Sr. No.</th> {/* Change ID to Sr. No. */}
+              <th>Sr. No.</th>
               <th>Name</th>
               <th>Link</th>
               <th>Actions</th>
@@ -73,7 +90,7 @@ const LinksPage = () => {
           <tbody>
             {filteredLinks.map((link, index) => (
               <tr key={link._id}>
-                <td>{index + 1}</td> {/* Use index for Sr. No. */}
+                <td>{index + 1}</td>
                 <td>{link.name}</td>
                 <td>
                   <a href={link.link} target="_blank" rel="noopener noreferrer">

@@ -23,6 +23,27 @@ export default async function handler(req, res) {
         res.status(400).json({ success: false });
       }
       break;
+    case 'DELETE':
+      try {
+        const { id } = req.query;
+        await Link.findByIdAndDelete(id);
+        res.status(204).json({ success: true });
+      } catch (error) {
+        res.status(400).json({ success: false });
+      }
+      break;
+    case 'PUT':
+      try {
+        const { id } = req.query;
+        const updatedLink = await Link.findByIdAndUpdate(id, req.body, {
+          new: true,
+          runValidators: true,
+        });
+        res.status(200).json({ success: true, data: updatedLink });
+      } catch (error) {
+        res.status(400).json({ success: false });
+      }
+      break;
     default:
       res.status(400).json({ success: false });
       break;
