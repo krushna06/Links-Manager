@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { auth } from '../lib/firebase';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import styles from '../styles/Login.module.css';
 
 const LoginPage = () => {
@@ -10,7 +10,7 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleSubmit = async (e) => {
+  const handleEmailLogin = async (e) => {
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, password);
@@ -20,9 +20,19 @@ const LoginPage = () => {
     }
   };
 
+  const handleGoogleLogin = async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+      await signInWithPopup(auth, provider);
+      router.push('/links');
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
   return (
     <div className={styles.container}>
-      <form className={styles.loginForm} onSubmit={handleSubmit}>
+      <form className={styles.loginForm} onSubmit={handleEmailLogin}>
         <h1 className={styles.title}>Login</h1>
         {error && <p className={styles.error}>{error}</p>}
         <div>
@@ -46,8 +56,12 @@ const LoginPage = () => {
           />
         </div>
         <button type="submit" className={styles.button}>Login</button>
+        <p className={styles.or}>or</p>
+        <button type="button" className={styles.googleButton} onClick={handleGoogleLogin}>
+          Sign in with Google
+        </button>
         <p className={styles.link}>
-        Don’t have an account? <a href="/register">Register here</a>
+          Don’t have an account? <a href="/register">Register here</a>
         </p>
       </form>
     </div>
