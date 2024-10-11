@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { auth } from '../lib/firebase';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import styles from '../styles/Login.module.css';
 
-const LoginPage = () => {
+const RegisterPage = () => {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -13,8 +13,8 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      router.push('/links');
+      await createUserWithEmailAndPassword(auth, email, password);
+      router.push('/');
     } catch (err) {
       setError(err.message);
     }
@@ -23,7 +23,7 @@ const LoginPage = () => {
   return (
     <div className={styles.container}>
       <form className={styles.loginForm} onSubmit={handleSubmit}>
-        <h1 className={styles.title}>Login</h1>
+        <h1 className={styles.title}>Register</h1>
         {error && <p className={styles.error}>{error}</p>}
         <div>
           <label className={styles.label}>Email:</label>
@@ -45,13 +45,10 @@ const LoginPage = () => {
             required
           />
         </div>
-        <button type="submit" className={styles.button}>Login</button>
+        <button type="submit" className={styles.button}>Register</button>
       </form>
-      <p>
-        Don’t have an account? <a href="/register">Register here</a>
-      </p>
     </div>
   );
 };
 
-export default LoginPage;
+export default RegisterPage;
