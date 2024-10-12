@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { auth } from '../lib/firebase';
 import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import Link from 'next/link';
 import styles from '../styles/Login.module.css';
 
 const RegisterPage = () => {
@@ -61,8 +62,11 @@ const RegisterPage = () => {
           Sign in with Google
         </button>
         <p className={styles.link}>
-          Already have an account? <a href="/">Login here</a>
-        </p>
+          Already have an account?{' '}
+          <Link href="/">
+          <a>Login here</a>
+          </Link>
+          </p>
       </form>
     </div>
   );

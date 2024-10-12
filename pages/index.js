@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { auth } from '../lib/firebase';
 import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import Link from 'next/link';
 import styles from '../styles/Login.module.css';
 
 const LoginPage = () => {
@@ -61,8 +62,11 @@ const LoginPage = () => {
           Sign in with Google
         </button>
         <p className={styles.link}>
-          Don’t have an account? <a href="/register">Register here</a>
-        </p>
+          Don’t have an account?{' '}
+          <Link href="/register">
+          <a>Register here</a>
+          </Link>
+          </p>
       </form>
     </div>
   );
