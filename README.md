@@ -22,9 +22,9 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 
 ## Todo
 
-- Search Bar
+- ~~Search Bar~~
 - Folders
 - Better/Comfortable UI
-- Postgresql Database Implementation
-- Support More Login/Register Methods
+- ~~Postgresql Database Implementation~~
+- ~~Support More Login/Register Methods~~
 - Sort Option
