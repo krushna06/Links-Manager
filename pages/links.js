@@ -2,20 +2,22 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useAuth } from '../hooks/useAuth';
 import styles from '../styles/Links.module.css';
-import Modal from '../components/Modal';
-
-const truncateUrl = (url, maxLength = 50) => {
-  if (url.length <= maxLength) return url;
-  return url.slice(0, maxLength) + '...';
-};
+import AddModal from '../components/AddModal';
+import EditModal from '../components/EditModal';
 
 const LinksPage = () => {
   const router = useRouter();
   const { user, loading } = useAuth();
   const [linksData, setLinksData] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [currentLink, setCurrentLink] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
+
+  const truncateUrl = (url, maxLength = 50) => {
+    if (url.length <= maxLength) return url;
+    return url.slice(0, maxLength) + '...';
+  };
 
   useEffect(() => {
     if (!loading && !user) {
@@ -44,32 +46,35 @@ const LinksPage = () => {
   }, [user]);
 
   const handleAddLink = async (newLink) => {
-    if (currentLink) {
-      const response = await fetch(`/api/links?id=${currentLink._id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${user.uid}`,
-        },
-        body: JSON.stringify(newLink),
-      });
-      const result = await response.json();
-      if (result.success) {
-        setLinksData(linksData.map(link => link._id === currentLink._id ? result.data : link));
-      }
-    } else {
-      const response = await fetch('/api/links', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${user.uid}`,
-        },
-        body: JSON.stringify(newLink),
-      });
-      const result = await response.json();
-      if (result.success) {
-        setLinksData([...linksData, result.data]);
-      }
+    const response = await fetch('/api/links', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${user.uid}`,
+      },
+      body: JSON.stringify(newLink),
+    });
+    const result = await response.json();
+    if (result.success) {
+      setLinksData([...linksData, result.data]);
+      setIsAddModalOpen(false);
+    }
+  };
+
+  const handleEditLink = async (updatedLink) => {
+    const response = await fetch(`/api/links?id=${currentLink._id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${user.uid}`,
+      },
+      body: JSON.stringify(updatedLink),
+    });
+    const result = await response.json();
+    if (result.success) {
+      setLinksData(linksData.map(link => link._id === currentLink._id ? result.data : link));
+      setIsEditModalOpen(false);
+      setCurrentLink(null);
     }
   };
 
@@ -87,7 +92,7 @@ const LinksPage = () => {
 
   const openEditModal = (link) => {
     setCurrentLink(link);
-    setIsModalOpen(true);
+    setIsEditModalOpen(true);
   };
 
   const filteredLinks = linksData.filter(link =>
@@ -113,7 +118,7 @@ const LinksPage = () => {
           onChange={(e) => setSearchQuery(e.target.value)}
           className={styles.searchInput}
         />
-        <button className={styles.addButton} onClick={() => setIsModalOpen(true)}>+</button>
+        <button className={styles.addButton} onClick={() => setIsAddModalOpen(true)}>+</button>
         <table className={styles.table}>
           <thead>
             <tr>
@@ -145,13 +150,18 @@ const LinksPage = () => {
             ))}
           </tbody>
         </table>
-        <Modal 
-          isOpen={isModalOpen} 
+        <AddModal 
+          isOpen={isAddModalOpen} 
+          onClose={() => setIsAddModalOpen(false)} 
+          onSubmit={handleAddLink} 
+        />
+        <EditModal 
+          isOpen={isEditModalOpen} 
           onClose={() => {
-            setIsModalOpen(false);
+            setIsEditModalOpen(false);
             setCurrentLink(null);
           }} 
-          onSubmit={handleAddLink} 
+          onSubmit={handleEditLink} 
           currentLink={currentLink}
         />
       </div>

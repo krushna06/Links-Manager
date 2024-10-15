@@ -1,20 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styles from '../styles/Modal.module.css';
 
-const Modal = ({ isOpen, onClose, onSubmit, currentLink }) => {
+const AddModal = ({ isOpen, onClose, onSubmit }) => {
   const [name, setName] = useState('');
   const [link, setLink] = useState('');
-  const [isClosing, setIsClosing] = useState(false);
-
-  useEffect(() => {
-    if (currentLink) {
-      setName(currentLink.name);
-      setLink(currentLink.link);
-    } else {
-      setName('');
-      setLink('');
-    }
-  }, [currentLink]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -23,19 +12,17 @@ const Modal = ({ isOpen, onClose, onSubmit, currentLink }) => {
   };
 
   const handleClose = () => {
-    setIsClosing(true);
-    setTimeout(() => {
-      onClose();
-      setIsClosing(false);
-    }, 300);
+    setName('');
+    setLink('');
+    onClose();
   };
 
-  if (!isOpen && !isClosing) return null;
+  if (!isOpen) return null;
 
   return (
-    <div className={`${styles.overlay} ${isClosing ? styles.closing : ''}`}>
-      <div className={`${styles.modal} ${isClosing ? styles.closing : ''}`}>
-        <h2>{currentLink ? 'Edit Link' : 'Add Link'}</h2>
+    <div className={styles.overlay}>
+      <div className={styles.modal}>
+        <h2>Add Link</h2>
         <label>Name:</label>
         <input
           type="text"
@@ -52,7 +39,7 @@ const Modal = ({ isOpen, onClose, onSubmit, currentLink }) => {
         />
         <div className={styles.buttonContainer}>
           <button onClick={handleSubmit} className={styles.addButton}>
-            {currentLink ? 'Update Link' : 'Add Link'}
+            Add Link
           </button>
           <button onClick={handleClose} className={styles.cancelButton}>
             Cancel
@@ -63,4 +50,4 @@ const Modal = ({ isOpen, onClose, onSubmit, currentLink }) => {
   );
 };
 
-export default Modal;
+export default AddModal;
