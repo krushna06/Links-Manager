@@ -64,7 +64,7 @@ const LoginPage = () => {
         <p className={styles.link}>
           Don’t have an account?{' '}
           <Link href="/register">
-          <a>Register here</a>
+          Register here
           </Link>
           </p>
       </form>

@@ -64,7 +64,7 @@ const RegisterPage = () => {
         <p className={styles.link}>
           Already have an account?{' '}
           <Link href="/">
-          <a>Login here</a>
+          Login here
           </Link>
           </p>
       </form>
