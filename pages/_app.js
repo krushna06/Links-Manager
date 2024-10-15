@@ -33,7 +33,7 @@ export default function App({ Component, pageProps }) {
     <>
       <Head>
         <title>Links Manager</title>
-        <meta name="description" content="Description of my website" />
+        <meta name="description" content="A simple link manager which helps you store your important links. A project by Krushna Vyas (@n0step_)" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <GitHubIcon />
