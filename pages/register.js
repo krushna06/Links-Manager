@@ -57,7 +57,6 @@ const RegisterPage = () => {
           />
         </div>
         <button type="submit" className={styles.button}>Register</button>
-        <p className={styles.or}>or</p>
         <button type="button" className={styles.googleButton} onClick={handleGoogleSignIn}>
           Sign in with Google
         </button>

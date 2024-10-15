@@ -57,7 +57,6 @@ const LoginPage = () => {
           />
         </div>
         <button type="submit" className={styles.button}>Login</button>
-        <p className={styles.or}>or</p>
         <button type="button" className={styles.googleButton} onClick={handleGoogleLogin}>
           Sign in with Google
         </button>
