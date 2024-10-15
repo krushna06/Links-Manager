@@ -25,7 +25,13 @@ const LinksPage = () => {
 
   useEffect(() => {
     const fetchLinks = async () => {
-      const response = await fetch('/api/links');
+      const response = await fetch('/api/links', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${user.uid}`,
+        },
+      });
       const result = await response.json();
       if (result.success) {
         setLinksData(result.data);
@@ -43,6 +49,7 @@ const LinksPage = () => {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${user.uid}`,
         },
         body: JSON.stringify(newLink),
       });
@@ -55,6 +62,7 @@ const LinksPage = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${user.uid}`,
         },
         body: JSON.stringify(newLink),
       });
@@ -68,6 +76,9 @@ const LinksPage = () => {
   const deleteLink = async (id) => {
     const response = await fetch(`/api/links?id=${id}`, {
       method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${user.uid}`,
+      },
     });
     if (response.ok) {
       setLinksData(linksData.filter(link => link._id !== id));
@@ -119,7 +130,7 @@ const LinksPage = () => {
                 <td>{link.name}</td>
                 <td className={styles.linkCell}>
                   <a href={link.link} target="_blank" rel="noopener noreferrer">
-                    {truncateUrl(link.link, 50)} {/* Truncate the URL for display */}
+                    {truncateUrl(link.link, 50)}
                   </a>
                 </td>
                 <td>

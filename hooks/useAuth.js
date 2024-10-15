@@ -10,6 +10,7 @@ export const useAuth = () => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       setLoading(false);
+      // console.log('User:', currentUser);
     });
     return () => unsubscribe();
   }, []);
