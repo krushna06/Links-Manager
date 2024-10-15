@@ -86,3 +86,16 @@
   outline: none;
   background-color: #e2e6ea;
 }
+
+.linkCell {
+  max-width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.linkCell a {
+  text-decoration: none;
+  color: #3498db;
+  word-break: break-all;
+}

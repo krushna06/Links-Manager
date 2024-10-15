@@ -4,6 +4,11 @@ import { useAuth } from '../hooks/useAuth';
 import styles from '../styles/Links.module.css';
 import Modal from '../components/Modal';
 
+const truncateUrl = (url, maxLength = 50) => {
+  if (url.length <= maxLength) return url;
+  return url.slice(0, maxLength) + '...';
+};
+
 const LinksPage = () => {
   const router = useRouter();
   const { user, loading } = useAuth();
@@ -112,9 +117,9 @@ const LinksPage = () => {
               <tr key={link._id}>
                 <td>{index + 1}</td>
                 <td>{link.name}</td>
-                <td>
+                <td className={styles.linkCell}>
                   <a href={link.link} target="_blank" rel="noopener noreferrer">
-                    {link.link}
+                    {truncateUrl(link.link, 50)} {/* Truncate the URL for display */}
                   </a>
                 </td>
                 <td>
