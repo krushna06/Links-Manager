@@ -2,9 +2,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   background-color: #e9ecef;
   font-family: Arial, sans-serif;
+  padding: 20px;
 }
 
 .content {
@@ -16,23 +17,25 @@
   width: 90%;
   max-width: 1000px;
   text-align: center;
+  overflow-x: auto;
 }
 
 .title {
   color: #333;
+  font-size: 1.5rem;
 }
 
 .table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .table th,
 .table td {
   border: 1px solid #ccc;
-  padding: 15px;
+  padding: 12px;
   text-align: left;
   color: #333;
 }
@@ -98,4 +101,56 @@
   text-decoration: none;
   color: #3498db;
   word-break: break-all;
+}
+
+@media (max-width: 768px) {
+  .content {
+    padding: 1rem;
+  }
+
+  .title {
+    font-size: 1.2rem;
+  }
+
+  .table {
+    font-size: 14px;
+  }
+
+  .table th {
+    display: none;
+  }
+
+  .table tr {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .table td {
+    display: block;
+    width: 100%;
+    text-align: left;
+    margin-bottom: 0.5rem;
+  }
+
+  .table td.linkCell {
+    display: none;
+  }
+
+  .table td.nameCell a {
+    text-decoration: none;
+    color: #3498db;
+    font-weight: bold;
+    font-size: 1rem;
+  }
+
+  .table td:last-child {
+    text-align: right;
+  }
+
+  .table td i {
+    font-size: 1rem;
+  }
 }

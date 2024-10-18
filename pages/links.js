@@ -72,7 +72,9 @@ const LinksPage = () => {
     });
     const result = await response.json();
     if (result.success) {
-      setLinksData(linksData.map(link => link._id === currentLink._id ? result.data : link));
+      setLinksData(
+        linksData.map(link => (link._id === currentLink._id ? result.data : link))
+      );
       setIsEditModalOpen(false);
       setCurrentLink(null);
     }
@@ -124,7 +126,7 @@ const LinksPage = () => {
             <tr>
               <th>Sr. No.</th>
               <th>Name</th>
-              <th>Link</th>
+              <th className={styles.linkCell}>Link</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -132,7 +134,11 @@ const LinksPage = () => {
             {filteredLinks.map((link, index) => (
               <tr key={link._id}>
                 <td>{index + 1}</td>
-                <td>{link.name}</td>
+                <td className={styles.nameCell}>
+                  <a href={link.link} target="_blank" rel="noopener noreferrer">
+                    {link.name}
+                  </a>
+                </td>
                 <td className={styles.linkCell}>
                   <a href={link.link} target="_blank" rel="noopener noreferrer">
                     {truncateUrl(link.link, 50)}
