@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { auth } from '../lib/firebase';
 import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import axios from 'axios';
 import Link from 'next/link';
 import styles from '../styles/Login.module.css';
 
@@ -11,10 +12,26 @@ const RegisterPage = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
+  const webhookURL = process.env.NEXT_PUBLIC_DISCORD_WEBHOOK_URL;
+
+  const sendRegisterNotification = async (email) => {
+    const currentTime = new Date().toLocaleString();
+    try {
+      await axios.post(webhookURL, {
+        content: `New user **${email}** registered at **${currentTime}**`,
+      });
+    } catch (err) {
+      console.error('Error sending webhook notification:', err);
+    }
+  };
+
   const handleEmailRegister = async (e) => {
     e.preventDefault();
     try {
       await createUserWithEmailAndPassword(auth, email, password);
+
+      sendRegisterNotification(email);
+
       router.push('/');
     } catch (err) {
       setError(err.message);
@@ -24,7 +41,11 @@ const RegisterPage = () => {
   const handleGoogleSignIn = async () => {
     const provider = new GoogleAuthProvider();
     try {
-      await signInWithPopup(auth, provider);
+      const result = await signInWithPopup(auth, provider);
+      const userEmail = result.user.email;
+
+      sendRegisterNotification(userEmail);
+
       router.push('/links');
     } catch (err) {
       setError(err.message);
@@ -63,9 +84,9 @@ const RegisterPage = () => {
         <p className={styles.link}>
           Already have an account?{' '}
           <Link href="/">
-          Login here
+            Login here
           </Link>
-          </p>
+        </p>
       </form>
     </div>
   );

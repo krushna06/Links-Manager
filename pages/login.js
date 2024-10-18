@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { auth } from '../lib/firebase';
 import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import axios from 'axios';
 import Link from 'next/link';
 import styles from '../styles/Login.module.css';
 
@@ -11,10 +12,26 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
+  const webhookURL = process.env.NEXT_PUBLIC_DISCORD_WEBHOOK_URL;
+
+  const sendLoginNotification = async (email) => {
+    const currentTime = new Date().toLocaleString();
+    try {
+      await axios.post(webhookURL, {
+        content: `User **${email}** logged in at **${currentTime}**`,
+      });
+    } catch (err) {
+      console.error('Error sending webhook notification:', err);
+    }
+  };
+
   const handleEmailLogin = async (e) => {
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, password);
+      
+      sendLoginNotification(email);
+
       router.push('/links');
     } catch (err) {
       setError(err.message);
@@ -24,7 +41,11 @@ const LoginPage = () => {
   const handleGoogleLogin = async () => {
     const provider = new GoogleAuthProvider();
     try {
-      await signInWithPopup(auth, provider);
+      const result = await signInWithPopup(auth, provider);
+      const userEmail = result.user.email;
+
+      sendLoginNotification(userEmail);
+
       router.push('/links');
     } catch (err) {
       setError(err.message);
