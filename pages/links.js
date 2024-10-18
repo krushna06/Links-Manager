@@ -113,6 +113,8 @@ const LinksPage = () => {
     <div className={styles.container}>
       <div className={styles.content}>
         <h1 className={styles.title}>Links Manager</h1>
+        <br></br>
+        <br></br>
         <input
           type="text"
           placeholder="Search by name..."
