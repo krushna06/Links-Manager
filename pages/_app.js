@@ -1,10 +1,13 @@
 import "@/styles/globals.css";
-import 'font-awesome/css/font-awesome.min.css';
 import Head from 'next/head';
 import Link from 'next/link';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import dynamic from 'next/dynamic';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
+
+const FontAwesomeIcon = dynamic(() =>
+  import('@fortawesome/react-fontawesome').then(mod => mod.FontAwesomeIcon), { ssr: false }
+);
 
 library.add(faGithub);
 
