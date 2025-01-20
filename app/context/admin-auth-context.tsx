@@ -29,7 +29,10 @@ export function AdminAuthProvider({ children }: { children: React.ReactNode }) {
   }, [])
 
   const loginAdmin = async (username: string, password: string) => {
-    if (username === process.env.NEXT_PUBLIC_ADMIN_USERNAME && password === process.env.NEXT_PUBLIC_ADMIN_PASSWORD) {
+    const correctUsername = process.env.NEXT_PUBLIC_ADMIN_USERNAME
+    const correctPassword = process.env.NEXT_PUBLIC_ADMIN_PASSWORD
+
+    if (username === correctUsername && password === correctPassword) {
       Cookies.set("adminLoggedIn", "true", { expires: 7 }) // Set cookie to expire in 7 days
       setIsAdminLoggedIn(true)
       return true
