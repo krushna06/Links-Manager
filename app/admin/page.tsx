@@ -6,12 +6,12 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 
 // Mock data for the chart
 const data = [
-  { name: 'Jan', users: 4, links: 20 },
-  { name: 'Feb', users: 7, links: 45 },
-  { name: 'Mar', users: 12, links: 80 },
-  { name: 'Apr', users: 18, links: 130 },
-  { name: 'May', users: 25, links: 200 },
-  { name: 'Jun', users: 31, links: 290 },
+  { name: 'Jan', users: null, links: 20 },
+  { name: 'Feb', users: null, links: 45 },
+  { name: 'Mar', users: null, links: 80 },
+  { name: 'Apr', users: null, links: 130 },
+  { name: 'May', users: null, links: 200 },
+  { name: 'Jun', users: null, links: 290 },
 ]
 
 export default function AdminDashboard() {

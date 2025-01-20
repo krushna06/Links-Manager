@@ -146,7 +146,7 @@ export default function FolderLinks({ params }: { params: { folder: string } }) 
 
   const moveLink = async () => {
     if (moveTarget && movePath) {
-      const targetFolderId = movePath === '..' ? null : params.folder
+      const targetFolderId = movePath === '../' || './' || '..' ? null : params.folder
       try {
         const response = await fetch(`/api/links/${moveTarget._id}`, {
           method: 'PUT',
