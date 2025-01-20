@@ -1,6 +1,6 @@
 {
-  "name": "links-manager",
-  "version": "0.2.0",
+  "name": "my-v0-project",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -61,7 +61,8 @@
     "firebase": "latest",
     "react-icons": "latest",
     "mongoose": "latest",
-    "firebase-admin": "latest"
+    "firebase-admin": "latest",
+    "js-cookie": "latest"
   },
   "devDependencies": {
     "@types/node": "^22",

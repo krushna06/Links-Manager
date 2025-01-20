@@ -1,37 +1,35 @@
-'use client'
+"use client"
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts"
 
-// Mock data for the chart
-const data = [
-  { name: 'Jan', users: null, links: 20 },
-  { name: 'Feb', users: null, links: 45 },
-  { name: 'Mar', users: null, links: 80 },
-  { name: 'Apr', users: null, links: 130 },
-  { name: 'May', users: null, links: 200 },
-  { name: 'Jun', users: null, links: 290 },
-]
+interface GrowthData {
+  name: string
+  users: number
+  links: number
+}
 
 export default function AdminDashboard() {
   const [totalUsers, setTotalUsers] = useState(0)
   const [totalLinks, setTotalLinks] = useState(0)
+  const [growthData, setGrowthData] = useState<GrowthData[]>([])
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const response = await fetch('/api/admin/stats')
-        if (!response.ok) throw new Error('Failed to fetch stats')
+        const response = await fetch("/api/admin/stats")
+        if (!response.ok) throw new Error("Failed to fetch stats")
         const data = await response.json()
-        console.log('Fetched stats:', data);
+        console.log("Fetched stats:", data)
         setTotalUsers(data.totalUsers)
         setTotalLinks(data.totalLinks)
+        setGrowthData(data.growthData)
         setError(null)
       } catch (error) {
-        console.error('Error fetching stats:', error)
-        setError('Failed to fetch stats. Please try again later.')
+        console.error("Error fetching stats:", error)
+        setError("Failed to fetch stats. Please try again later.")
       }
     }
 
@@ -67,7 +65,7 @@ export default function AdminDashboard() {
         <CardContent>
           <div className="h-[400px]">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={data}>
+              <LineChart data={growthData}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
                 <YAxis yAxisId="left" />
