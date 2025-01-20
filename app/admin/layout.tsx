@@ -33,8 +33,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   return (
     <div className="flex h-screen">
-      <aside className="w-64 bg-background border-r border-border">
-        <ScrollArea className="h-full">
+      <aside className="w-64 bg-background border-r border-border flex flex-col">
+        <ScrollArea className="flex-grow">
           <div className="p-4">
             <h2 className="text-lg font-semibold mb-4">Admin Panel</h2>
             <nav className="space-y-2">
@@ -51,7 +51,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             </nav>
           </div>
         </ScrollArea>
-        <div className="p-4 border-t">
+        <div className="p-4 border-t sticky bottom-0 bg-background">
           <Button variant="default" className="w-full" onClick={handleLogout}>
             Logout
           </Button>
